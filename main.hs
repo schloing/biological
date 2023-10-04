@@ -27,9 +27,6 @@ org traits generation lifetime
 deforg :: Organism
 deforg = org [] 0 0
 
-for :: [a] -> (a -> IO ()) -> IO ()
-for list action = mapM_ action list
-
 orgcount :: Int = 10
 gencount :: Int = 100
 
@@ -38,7 +35,8 @@ calcgen :: Organism -> Int -> Organism
 calcgen organism iteration
     | iteration == gencount = organism
     | otherwise = calcgen (updateorg organism) (iteration + 1)
-        where updateorg o = o
+        where updateorg :: Organism -> Organism
+              updateorg o = o { generation = generation o + 1 }
 
 main :: IO ()
 main = do
