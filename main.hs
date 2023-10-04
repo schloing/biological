@@ -30,13 +30,20 @@ deforg = org [] 0 0
 for :: [a] -> (a -> IO ()) -> IO ()
 for list action = mapM_ action list
 
+orgcount :: Int = 10
+gencount :: Int = 100
+
+-- calculate next generation
+calcgen :: Organism -> Int -> Organism
+calcgen organism iteration
+    | iteration == gencount = organism
+    | otherwise = calcgen (updateorg organism) (iteration + 1)
+        where updateorg o = o
+
 main :: IO ()
 main = do
-    let generations :: Integer    = 100
-    let organisms   :: [Organism] = [deforg, deforg]
+    let organisms :: [Organism] = take orgcount (repeat deforg)
 
-    for [0..generations] (\i -> do
-        print i 
-        )
+    let _ = calcgen (head organisms) 0
 
     print (traits (head organisms))
