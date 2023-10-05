@@ -21,6 +21,7 @@ new_line a b
     | a == b    = error "origin and end points are identical"
     | otherwise = Line { a , b }
 
+-- calculate the intersection between two polygons
 polygon_intersection :: Polygon -> Polygon -> IO Polygon
 polygon_intersection a b = do
     let a_size :: Int = length (vertices a)
