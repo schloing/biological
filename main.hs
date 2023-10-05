@@ -1,21 +1,23 @@
+import Geometry
+
 data TraitType = 
     STRUCTURE_GEOMETRY | -- geometry of structures within cell
     OUTER_MEMBRANE     | -- cell membrane
     OTHER_TRAITS         -- placeholder
     deriving (Show, Eq)
 
-data Traits = Traits
+data Trait = Trait
     { name  :: TraitType
     , value :: Float
     } deriving Show
 
 data Organism = Organism
-    { traits     :: [Traits]
+    { traits     :: [Trait]
     , generation :: Int
     , lifetime   :: Float
     } deriving Show
 
-org :: [Traits] -> Int -> Float -> Organism
+org :: [Trait] -> Int -> Float -> Organism
 org traits generation lifetime
     | generation /= 0 = error "Non-zero initial generation"
     | lifetime   /= 0 = error "Non-zero initial lifetime"
