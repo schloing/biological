@@ -19,30 +19,27 @@ data Organism = Organism
 
 org :: [Trait] -> Int -> Float -> Organism
 org traits generation lifetime
-    | generation /= 0 = error "Non-zero initial generation"
-    | lifetime   /= 0 = error "Non-zero initial lifetime"
-    | otherwise       = Organism { traits = traits
-                                 , generation = generation
-                                 , lifetime = lifetime
-                                 }
+    | generation /= 0 = error "non-zero initial generation"
+    | lifetime   /= 0 = error "non-zero initial lifetime"
+    | otherwise       = Organism { traits , generation , lifetime }
 
-deforg :: Organism
-deforg = org [] 0 0
+def_org :: Organism
+def_org = org [] 0 0
 
-orgcount :: Int = 10
-gencount :: Int = 100
+org_count :: Int = 10
+gen_count :: Int = 100
 
 -- calculate next generation
 calcgen :: Organism -> Int -> Organism
 calcgen organism iteration
-    | iteration == gencount = organism
+    | iteration == gen_count = organism
     | otherwise = calcgen (updateorg organism) (iteration + 1)
         where updateorg :: Organism -> Organism
               updateorg o = o { generation = generation o + 1 }
 
 main :: IO ()
 main = do
-    let organisms :: [Organism] = take orgcount (repeat deforg)
+    let organisms :: [Organism] = take org_count (repeat def_org)
 
     let _ = calcgen (head organisms) 0
 
