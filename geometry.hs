@@ -27,7 +27,6 @@ polygon_intersection a b = do
     let a_size :: Int = length (vertices a)
         b_size :: Int = length (vertices b)
 
-    -- fix handler
     let handler = print "HI"
     forM_ (vertices a) (\x -> handler)
 
