@@ -1,21 +1,46 @@
 import Geometry
 
+-- we obviously cannot simulate materials true to nature here,
+-- so im opting for a fictional universe where these compositions
+-- are readily available to the organism
+
+data Composition = Composition
+    { carbon    :: Float -- increases strength of material, but increases weight
+    , potassium :: Float -- affects osmotic balance and cell turgor pressure
+    , water     :: Float -- increases efficiency of processes, but weakens overall structure   
+    }
+
+data GeometricStructure = GeometricStructure
+    { structure  :: Polygon
+    , composites :: Composition
+    }
+
 data TraitType = 
-    STRUCTURE_GEOMETRY | -- geometry of structures within cell
-    OUTER_MEMBRANE     | -- cell membrane
-    OTHER_TRAITS         -- placeholder
-    deriving (Show, Eq)
+    MEMBRANE_GEOMETRY  | -- shape, thickness
+    STRUCTURE		     -- organelles, specialised structures
+    deriving Eq
+
+class TraitValue a where
+    toTraitValue :: a -> TraitValue
+
+data TraitValue = FloatValue Float | CompositionValue Composition
+
+instance TraitValue Float       where toTraitValue = FloatValue
+instance TraitValue Composition where toTraitValue = CompositionValue
+
+data FloatValue       = FloatValue       Float
+data CompositionValue = CompositionValue Composition
 
 data Trait = Trait
     { name  :: TraitType
-    , value :: Float
-    } deriving Show
+    , value :: TraitValue
+    }
 
 data Organism = Organism
     { traits     :: [Trait]
     , generation :: Int
     , lifetime   :: Float
-    } deriving Show
+    }
 
 org :: [Trait] -> Int -> Float -> Organism
 org traits generation lifetime
@@ -43,4 +68,4 @@ main = do
 
     let _ = calcgen (head organisms) 0
 
-    print (traits (head organisms))
+    -- print (traits (head organisms))
