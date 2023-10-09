@@ -27,7 +27,7 @@ polygon_intersection a b = do
     let a_size :: Int = length (vertices a)
         b_size :: Int = length (vertices b)
 
-    let handler = print "HJI"
+    let handler = return ()
     forM_ (vertices a) (\x -> handler)
 
     return $ Polygon { vertices = [], segments = [] }

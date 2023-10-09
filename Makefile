@@ -1,5 +1,5 @@
-OBJS   = main.o  geometry.o
-SOURCE = main.hs geometry.hs
+OBJS   = main.o  geometry.o  value.o
+SOURCE = main.hs geometry.hs value.hs
 OUT    = out
 CC     = ghc
 
@@ -11,6 +11,9 @@ main.o: main.hs
 
 geometry.o: geometry.hs
 	$(CC) $(FLAGS) geometry.hs 
+
+value.o: value.hs
+	$(CC) $(FLAGS) value.hs 
 
 clean:
 	rm -f $(OBJS) $(OUT) *.hi
